@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import sequelize from "../src/config/database";
+import { TipoUsuario } from "../src/models/Usuario";
 
 // Importar modelos básicos
 import Provincia from "../src/models/Provincia";
@@ -24,6 +25,7 @@ import Poliza from "../src/models/Poliza";
 import ConfigEdad from "../src/models/ConfigEdad";
 import ConfigLocalidad from "../src/models/ConfigLocalidad";
 import ConfigAntiguedad from "../src/models/ConfigAntiguedad";
+import Siniestro from "../src/models/Siniestro";
 
 dotenv.config();
 
@@ -36,6 +38,7 @@ class SimpleDataSeeder {
 
     // 🧹 Tablas en orden de dependencia (de hijas a padres)
     const tables = [
+      "siniestro",
       "pago",
       "poliza",
       "lineacotizacion",
@@ -365,6 +368,127 @@ class SimpleDataSeeder {
         sexo: "Masculino",
         localidad_id: localidades[1].id,
       },
+      {
+        nombres: "Admin",
+        apellido: "Master",
+        fechaNacimiento: new Date("1980-01-01"),
+        tipoDocumento: "DNI",
+        documento: "10000001",
+        telefono: "11-8888-8888",
+        correo: "juanmcarriles@gmail.com",
+        domicilio: "Sistema 123",
+        sexo: "Masculino",
+        localidad_id: localidades[0].id,
+      },
+      {
+        nombres: "Vendedor",
+        apellido: "Oficial",
+        fechaNacimiento: new Date("1987-02-02"),
+        tipoDocumento: "DNI",
+        documento: "10000002",
+        telefono: "11-7777-7777",
+        correo: "luffyesmejor@gmail.com",
+        domicilio: "Ruta 50",
+        sexo: "Femenino",
+        localidad_id: localidades[1].id,
+      },
+      {
+        nombres: "Supervisor",
+        apellido: "Central",
+        fechaNacimiento: new Date("1979-03-03"),
+        tipoDocumento: "DNI",
+        documento: "10000003",
+        telefono: "11-6666-6666",
+        correo: "pedrooas65@gmail.com",
+        domicilio: "Zona Sur",
+        sexo: "Masculino",
+        localidad_id: localidades[2].id,
+      },
+      // Additional clients for more test data
+      {
+        nombres: "Laura Patricia",
+        apellido: "González Ruiz",
+        fechaNacimiento: new Date("1992-05-20"),
+        tipoDocumento: "DNI" as any,
+        documento: "28678901234",
+        telefono: "11-4555-2222",
+        correo: "laura.gonzalez@email.com",
+        domicilio: "San Juan 1122",
+        sexo: "Femenino",
+        localidad_id: localidades[0].id,
+      },
+      {
+        nombres: "Diego Martín",
+        apellido: "Sánchez Torres",
+        fechaNacimiento: new Date("1986-08-14"),
+        tipoDocumento: "DNI" as any,
+        documento: "24789012345",
+        telefono: "223-4555-3333",
+        correo: "diego.sanchez@email.com",
+        domicilio: "Moreno 445",
+        sexo: "Masculino",
+        localidad_id: localidades[1].id,
+      },
+      {
+        nombres: "Fernanda Isabel",
+        apellido: "Ramírez Castro",
+        fechaNacimiento: new Date("1994-12-03"),
+        tipoDocumento: "DNI" as any,
+        documento: "29890123456",
+        telefono: "351-4555-4444",
+        correo: "fernanda.ramirez@email.com",
+        domicilio: "Sarmiento 789",
+        sexo: "Femenino",
+        localidad_id: localidades[2].id,
+      },
+      {
+        nombres: "Pablo Andrés",
+        apellido: "Morales Vega",
+        fechaNacimiento: new Date("1983-04-25"),
+        tipoDocumento: "DNI" as any,
+        documento: "22901234567",
+        telefono: "341-4555-5555",
+        correo: "pablo.morales@email.com",
+        domicilio: "Mitre 334",
+        sexo: "Masculino",
+        localidad_id: localidades[3].id,
+      },
+      {
+        nombres: "Claudia Beatriz",
+        apellido: "Herrera Díaz",
+        fechaNacimiento: new Date("1991-09-17"),
+        tipoDocumento: "DNI" as any,
+        documento: "27012345678",
+        telefono: "11-4555-6666",
+        correo: "claudia.herrera@email.com",
+        domicilio: "Constitución 556",
+        sexo: "Femenino",
+        localidad_id: localidades[4].id,
+      },
+      {
+        nombres: "Gustavo Adolfo",
+        apellido: "Navarro Peña",
+        fechaNacimiento: new Date("1989-11-29"),
+        tipoDocumento: "DNI" as any,
+        documento: "26123456789",
+        telefono: "223-4555-7777",
+        correo: "gustavo.navarro@email.com",
+        domicilio: "Libertad 223",
+        sexo: "Masculino",
+        localidad_id: localidades[1].id,
+      },
+      {
+        nombres: "Valeria Soledad",
+        apellido: "Ortiz Méndez",
+        fechaNacimiento: new Date("1996-02-11"),
+        tipoDocumento: "DNI" as any,
+        documento: "31234567890",
+        telefono: "351-4555-8888",
+        correo: "valeria.ortiz@email.com",
+        domicilio: "Independencia 998",
+        sexo: "Femenino",
+        localidad_id: localidades[2].id,
+      },
     ];
 
     const created = await Persona.bulkCreate(personas);
@@ -381,18 +505,18 @@ class SimpleDataSeeder {
 
     const usuarios = [
       {
-        tipoUsuario: "ADMINISTRADOR" as any,
-        persona_id: personas[0].id,
+        tipoUsuario: TipoUsuario.ADMINISTRADOR,
+        persona_id: personas[5].id,
         activo: true,
       },
       {
-        tipoUsuario: "VENDEDOR" as any,
-        persona_id: personas[1].id,
+        tipoUsuario: TipoUsuario.VENDEDOR,
+        persona_id: personas[6].id,
         activo: true,
       },
       {
-        tipoUsuario: "VENDEDOR" as any,
-        persona_id: personas[2].id,
+        tipoUsuario: TipoUsuario.GESTOR_DE_SINIESTROS,
+        persona_id: personas[7].id,
         activo: true,
       },
     ];
@@ -405,24 +529,14 @@ class SimpleDataSeeder {
   private async seedClientes() {
     console.log("👨‍💼 Creando clientes...");
 
-    // Obtener las personas que acabamos de crear (usar las últimas 4 personas como clientes)
+    // Obtener las personas que acabamos de crear
     const personas = await Persona.findAll();
     console.log(`Found ${personas.length} personas for reference`);
 
-    const clientes = [
-      {
-        persona_id: personas[0].id,
-      },
-      {
-        persona_id: personas[1].id,
-      },
-      {
-        persona_id: personas[3].id,
-      },
-      {
-        persona_id: personas[4].id,
-      },
-    ];
+    // Create clients for all persons except the first 3 system users
+    const clientes = personas.map((persona) => ({
+      persona_id: persona.id,
+    }));
 
     const created = await Cliente.bulkCreate(clientes);
     console.log(`✅ ${created.length} clientes creados`);
@@ -475,6 +589,196 @@ class SimpleDataSeeder {
         gnc: false,
         cliente_id: clientes[3].idClient,
         version_id: versiones[5].id,
+      },
+      {
+        matricula: "MNO345",
+        chasis: "9BWZZZ377VT004255",
+        numeroMotor: "2TR001238",
+        añoFabricacion: 2018,
+        gnc: true,
+        cliente_id: clientes[4].idClient,
+        version_id: versiones[1].id,
+      },
+      {
+        matricula: "PQR678",
+        chasis: "9BWZZZ377VT004256",
+        numeroMotor: "1KR001239",
+        añoFabricacion: 2023,
+        gnc: false,
+        cliente_id: clientes[5].idClient,
+        version_id: versiones[4].id,
+      },
+      {
+        matricula: "STU901",
+        chasis: "9BWZZZ377VT004257",
+        numeroMotor: "2TR001240",
+        añoFabricacion: 2020,
+        gnc: false,
+        cliente_id: clientes[6].idClient,
+        version_id: versiones[6].id,
+      },
+      {
+        matricula: "VWX234",
+        chasis: "9BWZZZ377VT004258",
+        numeroMotor: "1KR001241",
+        añoFabricacion: 2019,
+        gnc: true,
+        cliente_id: clientes[7].idClient,
+        version_id: versiones[7].id,
+      },
+      {
+        matricula: "YZA567",
+        chasis: "9BWZZZ377VT004259",
+        numeroMotor: "2TR001242",
+        añoFabricacion: 2021,
+        gnc: false,
+        cliente_id: clientes[8]?.idClient || clientes[0].idClient,
+        version_id: versiones[0].id,
+      },
+      {
+        matricula: "BCD890",
+        chasis: "9BWZZZ377VT004260",
+        numeroMotor: "1KR001243",
+        añoFabricacion: 2022,
+        gnc: false,
+        cliente_id: clientes[9]?.idClient || clientes[1].idClient,
+        version_id: versiones[3].id,
+      },
+      {
+        matricula: "EFG123",
+        chasis: "9BWZZZ377VT004261",
+        numeroMotor: "2TR001244",
+        añoFabricacion: 2020,
+        gnc: true,
+        cliente_id: clientes[10]?.idClient || clientes[2].idClient,
+        version_id: versiones[2].id,
+      },
+      {
+        matricula: "HIJ456",
+        chasis: "9BWZZZ377VT004262",
+        numeroMotor: "1KR001245",
+        añoFabricacion: 2023,
+        gnc: false,
+        cliente_id: clientes[11]?.idClient || clientes[3].idClient,
+        version_id: versiones[5].id,
+      },
+      // Nuevos vehículos para más datos
+      {
+        matricula: "KLM789",
+        chasis: "9BWZZZ377VT004263",
+        numeroMotor: "2TR001246",
+        añoFabricacion: 2021,
+        gnc: true,
+        cliente_id: clientes[12]?.idClient || clientes[4].idClient,
+        version_id: versiones[1].id,
+      },
+      {
+        matricula: "NOP012",
+        chasis: "9BWZZZ377VT004264",
+        numeroMotor: "1KR001247",
+        añoFabricacion: 2022,
+        gnc: false,
+        cliente_id: clientes[13]?.idClient || clientes[5].idClient,
+        version_id: versiones[4].id,
+      },
+      {
+        matricula: "QRS345",
+        chasis: "9BWZZZ377VT004265",
+        numeroMotor: "2TR001248",
+        añoFabricacion: 2020,
+        gnc: false,
+        cliente_id: clientes[14]?.idClient || clientes[6].idClient,
+        version_id: versiones[6].id,
+      },
+      {
+        matricula: "TUV678",
+        chasis: "9BWZZZ377VT004266",
+        numeroMotor: "1KR001249",
+        añoFabricacion: 2019,
+        gnc: true,
+        cliente_id: clientes[0].idClient,
+        version_id: versiones[7].id,
+      },
+      {
+        matricula: "WXY901",
+        chasis: "9BWZZZ377VT004267",
+        numeroMotor: "2TR001250",
+        añoFabricacion: 2023,
+        gnc: false,
+        cliente_id: clientes[1].idClient,
+        version_id: versiones[0].id,
+      },
+      {
+        matricula: "ZAB234",
+        chasis: "9BWZZZ377VT004268",
+        numeroMotor: "1KR001251",
+        añoFabricacion: 2021,
+        gnc: true,
+        cliente_id: clientes[2].idClient,
+        version_id: versiones[2].id,
+      },
+      {
+        matricula: "CDE567",
+        chasis: "9BWZZZ377VT004269",
+        numeroMotor: "2TR001252",
+        añoFabricacion: 2020,
+        gnc: false,
+        cliente_id: clientes[3].idClient,
+        version_id: versiones[3].id,
+      },
+      {
+        matricula: "FGH890",
+        chasis: "9BWZZZ377VT004270",
+        numeroMotor: "1KR001253",
+        añoFabricacion: 2022,
+        gnc: false,
+        cliente_id: clientes[4].idClient,
+        version_id: versiones[5].id,
+      },
+      {
+        matricula: "IJK123",
+        chasis: "9BWZZZ377VT004271",
+        numeroMotor: "2TR001254",
+        añoFabricacion: 2019,
+        gnc: true,
+        cliente_id: clientes[5].idClient,
+        version_id: versiones[1].id,
+      },
+      {
+        matricula: "LMN456",
+        chasis: "9BWZZZ377VT004272",
+        numeroMotor: "1KR001255",
+        añoFabricacion: 2023,
+        gnc: false,
+        cliente_id: clientes[6].idClient,
+        version_id: versiones[4].id,
+      },
+      {
+        matricula: "OPQ789",
+        chasis: "9BWZZZ377VT004273",
+        numeroMotor: "2TR001256",
+        añoFabricacion: 2021,
+        gnc: true,
+        cliente_id: clientes[7].idClient,
+        version_id: versiones[6].id,
+      },
+      {
+        matricula: "RST012",
+        chasis: "9BWZZZ377VT004274",
+        numeroMotor: "1KR001257",
+        añoFabricacion: 2020,
+        gnc: false,
+        cliente_id: clientes[8]?.idClient || clientes[0].idClient,
+        version_id: versiones[7].id,
+      },
+      {
+        matricula: "UVW345",
+        chasis: "9BWZZZ377VT004275",
+        numeroMotor: "2TR001258",
+        añoFabricacion: 2022,
+        gnc: false,
+        cliente_id: clientes[9]?.idClient || clientes[1].idClient,
+        version_id: versiones[0].id,
       },
     ];
 
@@ -892,48 +1196,19 @@ class SimpleDataSeeder {
     console.log("📄 Creando documentación...");
 
     // Crear documentación ficticia con buffers vacíos
-    const documentos = [
-      {
-        fotoFrontal: Buffer.from("fake-photo-frontal-1"),
-        fotoTrasera: Buffer.from("fake-photo-trasera-1"),
-        fotoLateral1: Buffer.from("fake-photo-lateral1-1"),
-        fotoLateral2: Buffer.from("fake-photo-lateral2-1"),
-        fotoTecho: Buffer.from("fake-photo-techo-1"),
-        cedulaVerde: Buffer.from("fake-cedula-verde-1"),
-      },
-      {
-        fotoFrontal: Buffer.from("fake-photo-frontal-2"),
-        fotoTrasera: Buffer.from("fake-photo-trasera-2"),
-        fotoLateral1: Buffer.from("fake-photo-lateral1-2"),
-        fotoLateral2: Buffer.from("fake-photo-lateral2-2"),
-        fotoTecho: Buffer.from("fake-photo-techo-2"),
-        cedulaVerde: Buffer.from("fake-cedula-verde-2"),
-      },
-      {
-        fotoFrontal: Buffer.from("fake-photo-frontal-3"),
-        fotoTrasera: Buffer.from("fake-photo-trasera-3"),
-        fotoLateral1: Buffer.from("fake-photo-lateral1-3"),
-        fotoLateral2: Buffer.from("fake-photo-lateral2-3"),
-        fotoTecho: Buffer.from("fake-photo-techo-3"),
-        cedulaVerde: Buffer.from("fake-cedula-verde-3"),
-      },
-      {
-        fotoFrontal: Buffer.from("fake-photo-frontal-4"),
-        fotoTrasera: Buffer.from("fake-photo-trasera-4"),
-        fotoLateral1: Buffer.from("fake-photo-lateral1-4"),
-        fotoLateral2: Buffer.from("fake-photo-lateral2-4"),
-        fotoTecho: Buffer.from("fake-photo-techo-4"),
-        cedulaVerde: Buffer.from("fake-cedula-verde-4"),
-      },
-      {
-        fotoFrontal: Buffer.from("fake-photo-frontal-5"),
-        fotoTrasera: Buffer.from("fake-photo-trasera-5"),
-        fotoLateral1: Buffer.from("fake-photo-lateral1-5"),
-        fotoLateral2: Buffer.from("fake-photo-lateral2-5"),
-        fotoTecho: Buffer.from("fake-photo-techo-5"),
-        cedulaVerde: Buffer.from("fake-cedula-verde-5"),
-      },
-    ];
+    const documentos = [];
+
+    // Create 60 documentation records
+    for (let i = 1; i <= 60; i++) {
+      documentos.push({
+        fotoFrontal: Buffer.from(`fake-photo-frontal-${i}`),
+        fotoTrasera: Buffer.from(`fake-photo-trasera-${i}`),
+        fotoLateral1: Buffer.from(`fake-photo-lateral1-${i}`),
+        fotoLateral2: Buffer.from(`fake-photo-lateral2-${i}`),
+        fotoTecho: Buffer.from(`fake-photo-techo-${i}`),
+        cedulaVerde: Buffer.from(`fake-cedula-verde-${i}`),
+      });
+    }
 
     const created = await Documentacion.bulkCreate(documentos);
     console.log(`✅ ${created.length} documentos creados`);
@@ -943,60 +1218,61 @@ class SimpleDataSeeder {
   private async seedCotizaciones() {
     console.log("💰 Creando cotizaciones...");
 
+    // Helper function to generate random date within a specific month (0 = current month, 1 = last month, etc.)
+    const getRandomDateInMonth = (monthsAgo: number) => {
+      const now = new Date();
+      // Set to first day of current month first to avoid issues
+      const date = new Date(now.getFullYear(), now.getMonth(), 1);
+      // Then go back the specified number of months
+      date.setMonth(date.getMonth() - monthsAgo);
+
+      // Get days in that target month
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      // Set random day in that month
+      const randomDay = Math.floor(Math.random() * daysInMonth) + 1;
+      date.setDate(randomDay);
+
+      return date;
+    };
+
     // Obtener vehículos para las cotizaciones
     const vehiculos = await Vehiculo.findAll();
     console.log(`Found ${vehiculos.length} vehiculos for reference`);
 
-    const cotizaciones = [
-      {
-        fechaCreacion: new Date("2024-01-15"),
-        fechaVencimiento: new Date("2024-02-15"),
-        vehiculo_id: vehiculos[0].id,
-        configuracionLocalidad_id: undefined,
-        configuracionEdad_id: undefined,
-        configuracionAntiguedad_id: undefined,
-        activo: true,
-      },
-      {
-        fechaCreacion: new Date("2024-01-20"),
-        fechaVencimiento: new Date("2024-02-20"),
-        vehiculo_id: vehiculos[1].id,
-        configuracionLocalidad_id: undefined,
-        configuracionEdad_id: undefined,
-        configuracionAntiguedad_id: undefined,
-        activo: true,
-      },
-      {
-        fechaCreacion: new Date("2024-01-25"),
-        fechaVencimiento: new Date("2024-02-25"),
-        vehiculo_id: vehiculos[2].id,
-        configuracionLocalidad_id: undefined,
-        configuracionEdad_id: undefined,
-        configuracionAntiguedad_id: undefined,
-        activo: true,
-      },
-      {
-        fechaCreacion: new Date("2024-02-01"),
-        fechaVencimiento: new Date("2024-03-01"),
-        vehiculo_id: vehiculos[3].id,
-        configuracionLocalidad_id: undefined,
-        configuracionEdad_id: undefined,
-        configuracionAntiguedad_id: undefined,
-        activo: true,
-      },
-      {
-        fechaCreacion: new Date("2024-02-05"),
-        fechaVencimiento: new Date("2024-03-05"),
-        vehiculo_id: vehiculos[0].id, // Segunda cotización para el primer vehículo
-        configuracionLocalidad_id: undefined,
-        configuracionEdad_id: undefined,
-        configuracionAntiguedad_id: undefined,
-        activo: true,
-      },
-    ];
+    const cotizaciones = [];
+
+    // Create 15-20 quotations per month for the last 6 months (month 0 = current, 5 = 5 months ago)
+    const quotationsPerMonth = 18;
+    for (let month = 0; month < 6; month++) {
+      for (let i = 0; i < quotationsPerMonth; i++) {
+        const fechaCreacion = getRandomDateInMonth(month);
+        const fechaVencimiento = new Date(fechaCreacion);
+        fechaVencimiento.setDate(fechaCreacion.getDate() + 30);
+
+        cotizaciones.push({
+          fechaCreacion: fechaCreacion,
+          fechaVencimiento: fechaVencimiento,
+          vehiculo_id: vehiculos[Math.floor(Math.random() * vehiculos.length)].id,
+          configuracionLocalidad_id: undefined,
+          configuracionEdad_id: undefined,
+          configuracionAntiguedad_id: undefined,
+          activo: true,
+        });
+      }
+    }
 
     const created = await Cotizacion.bulkCreate(cotizaciones);
     console.log(`✅ ${created.length} cotizaciones creadas`);
+
+    // Log date range for verification
+    const dates = created.map((c: any) => new Date(c.fechaCreacion));
+    const minDate = new Date(Math.min(...dates.map(d => d.getTime())));
+    const maxDate = new Date(Math.max(...dates.map(d => d.getTime())));
+    console.log(`   📅 Rango: ${minDate.toLocaleDateString()} - ${maxDate.toLocaleDateString()}`);
+
     return created;
   }
 
@@ -1013,7 +1289,7 @@ class SimpleDataSeeder {
     // Debug: Verificar que tenemos suficientes datos
     if (cotizaciones.length < 5) {
       console.log(
-        `⚠️  Solo se encontraron ${cotizaciones.length} cotizaciones, se esperaban 5`
+        `⚠️  Solo se encontraron ${cotizaciones.length} cotizaciones`
       );
     }
     if (coberturas.length < 3) {
@@ -1022,46 +1298,19 @@ class SimpleDataSeeder {
       );
     }
 
-    // Verificar que todos los elementos existen antes de usar sus IDs
+    // Crear líneas de cotización para cada cotización
     const lineas = [];
 
-    if (cotizaciones[0] && coberturas[0]) {
-      lineas.push({
-        monto: 15000.0,
-        cotizacion_id: cotizaciones[0].id,
-        cobertura_id: coberturas[0].id, // Cobertura Básica
-      });
-    }
+    for (let i = 0; i < cotizaciones.length; i++) {
+      // Distribuir las coberturas de manera variada
+      const coberturaIndex = i % coberturas.length;
+      const montoBase = 15000 + (coberturaIndex * 5000);
+      const variacion = Math.floor(Math.random() * 5000);
 
-    if (cotizaciones[1] && coberturas[1]) {
       lineas.push({
-        monto: 25000.0,
-        cotizacion_id: cotizaciones[1].id,
-        cobertura_id: coberturas[1].id, // Cobertura Intermedia
-      });
-    }
-
-    if (cotizaciones[2] && coberturas[2]) {
-      lineas.push({
-        monto: 20000.0,
-        cotizacion_id: cotizaciones[2].id,
-        cobertura_id: coberturas[2].id, // Cobertura Total
-      });
-    }
-
-    if (cotizaciones[3] && coberturas[1]) {
-      lineas.push({
-        monto: 18000.0,
-        cotizacion_id: cotizaciones[3].id,
-        cobertura_id: coberturas[1].id, // Cobertura Intermedia
-      });
-    }
-
-    if (cotizaciones[4] && coberturas[0]) {
-      lineas.push({
-        monto: 22000.0,
-        cotizacion_id: cotizaciones[4].id,
-        cobertura_id: coberturas[0].id, // Cobertura Básica
+        monto: montoBase + variacion,
+        cotizacion_id: cotizaciones[i].id,
+        cobertura_id: coberturas[coberturaIndex].id,
       });
     }
 
@@ -1072,6 +1321,32 @@ class SimpleDataSeeder {
 
   private async seedPolizas() {
     console.log("📜 Creando pólizas...");
+
+    // Helper function for random dates - improved version
+    const getRandomDateLastSixMonths = (monthsAgo: number) => {
+      const now = new Date();
+      // Set to first day of current month first to avoid issues
+      const date = new Date(now.getFullYear(), now.getMonth(), 1);
+      // Then go back the specified number of months
+      date.setMonth(date.getMonth() - monthsAgo);
+
+      // Get days in that target month
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      // Set random day in that month
+      const randomDay = Math.floor(Math.random() * daysInMonth) + 1;
+      date.setDate(randomDay);
+
+      return date;
+    };
+
+    const addMonths = (date: Date, months: number) => {
+      const result = new Date(date);
+      result.setMonth(result.getMonth() + months);
+      return result;
+    };
 
     // Obtener las referencias necesarias
     const usuarios = await Usuario.findAll();
@@ -1084,81 +1359,60 @@ class SimpleDataSeeder {
       `Found ${usuarios.length} usuarios, ${documentos.length} documentos, ${lineasCotizacion.length} líneas cotización`
     );
 
-    const polizas = [
-      {
-        usuario_legajo: usuarios[0].legajo,
-        documentacion_id: documentos[0].id,
-        lineaCotizacion_id: lineasCotizacion[0].id,
-        periodoPago_id: periodosPago[0].id,
-        tipoContratacion_id: tiposContratacion[0].id,
-        precioPolizaActual: 15000.0,
-        montoAsegurado: 3500000.0,
-        fechaContratacion: new Date("2024-02-01"),
-        horaContratacion: "10:30:00",
-        fechaVencimiento: new Date("2025-02-01"),
-        renovacionAutomatica: true,
-        estadoPoliza: "VIGENTE" as any,
-      },
-      {
-        usuario_legajo: usuarios[1].legajo,
-        documentacion_id: documentos[1].id,
-        lineaCotizacion_id: lineasCotizacion[1].id,
-        periodoPago_id: periodosPago[1].id,
-        tipoContratacion_id: tiposContratacion[0].id,
-        precioPolizaActual: 25000.0,
-        montoAsegurado: 5500000.0,
-        fechaContratacion: new Date("2024-02-05"),
-        horaContratacion: "14:15:00",
-        fechaVencimiento: new Date("2025-02-05"),
-        renovacionAutomatica: true,
-        estadoPoliza: "VIGENTE" as any,
-      },
-      {
-        usuario_legajo: usuarios[2].legajo,
-        documentacion_id: documentos[2].id,
-        lineaCotizacion_id: lineasCotizacion[2].id,
-        periodoPago_id: periodosPago[2].id,
-        tipoContratacion_id: tiposContratacion[1].id,
-        precioPolizaActual: 20000.0,
-        montoAsegurado: 2800000.0,
-        fechaContratacion: new Date("2024-02-10"),
-        horaContratacion: "16:45:00",
-        fechaVencimiento: new Date("2024-08-10"),
-        renovacionAutomatica: false,
-        estadoPoliza: "VIGENTE" as any,
-      },
-      {
-        usuario_legajo: usuarios[0].legajo,
-        documentacion_id: documentos[3].id,
-        lineaCotizacion_id: lineasCotizacion[3].id,
-        periodoPago_id: periodosPago[3].id,
-        tipoContratacion_id: tiposContratacion[3].id,
-        precioPolizaActual: 18000.0,
-        montoAsegurado: 3200000.0,
-        fechaContratacion: new Date("2024-02-15"),
-        horaContratacion: "11:20:00",
-        fechaVencimiento: new Date("2024-03-15"),
-        renovacionAutomatica: true,
-        estadoPoliza: "VIGENTE" as any,
-      },
-      {
-        usuario_legajo: usuarios[1].legajo,
-        documentacion_id: documentos[4].id,
-        lineaCotizacion_id: lineasCotizacion[4].id,
-        periodoPago_id: periodosPago[0].id,
-        tipoContratacion_id: tiposContratacion[0].id,
-        precioPolizaActual: 22000.0,
-        montoAsegurado: 3500000.0,
-        fechaContratacion: new Date("2024-02-20"),
-        horaContratacion: "09:00:00",
-        fechaVencimiento: new Date("2025-02-20"),
-        renovacionAutomatica: true,
-        estadoPoliza: "VIGENTE" as any,
-      },
-    ];
+    const polizas = [];
+    // More VIGENTE policies for better data: 60% vigente, 15% vencida, 10% cancelada, 15% impaga
+    const estadosPoliza = ["VIGENTE", "VIGENTE", "VIGENTE", "VIGENTE", "VENCIDA", "CANCELADA", "IMPAGA"];
+
+    // Crear pólizas para la mayoría de las líneas de cotización
+    for (let i = 0; i < Math.min(lineasCotizacion.length, documentos.length); i++) {
+      const estado = estadosPoliza[i % estadosPoliza.length];
+      const monthsAgo = Math.floor(i / 7); // Distribuir uniformemente
+      const fechaContratacion = getRandomDateLastSixMonths(monthsAgo);
+      const tipoContratacion = tiposContratacion[i % tiposContratacion.length];
+      const mesesContrato = tipoContratacion.cantidadMeses;
+      const fechaVencimiento = addMonths(fechaContratacion, mesesContrato);
+
+      let fechaCancelacion = undefined;
+      let hashContrato = undefined;
+
+      // ALL VIGENTE policies must have blockchain hash
+      if (estado === "VIGENTE") {
+        hashContrato = `0x${Math.random().toString(16).substr(2, 64)}`;
+      }
+
+      // Set cancellation date if state is CANCELADA
+      if (estado === "CANCELADA") {
+        const cancelDaysAfter = Math.floor(Math.random() * 30) + 10;
+        fechaCancelacion = new Date(fechaContratacion);
+        fechaCancelacion.setDate(fechaCancelacion.getDate() + cancelDaysAfter);
+      }
+
+      polizas.push({
+        usuario_legajo: usuarios[i % usuarios.length].legajo,
+        documentacion_id: documentos[i].id,
+        lineaCotizacion_id: lineasCotizacion[i].id,
+        periodoPago_id: periodosPago[i % periodosPago.length].id,
+        tipoContratacion_id: tipoContratacion.id,
+        precioPolizaActual: 18000 + Math.floor(Math.random() * 7000), // 18000-25000 for consistent revenues
+        montoAsegurado: 2500000 + (i * 300000),
+        fechaContratacion: fechaContratacion,
+        horaContratacion: `${Math.floor(Math.random() * 12) + 9}:${Math.floor(Math.random() * 60)}:00`,
+        fechaVencimiento: fechaVencimiento,
+        fechaCancelacion: fechaCancelacion,
+        renovacionAutomatica: i % 2 === 0,
+        estadoPoliza: estado as any,
+        hashContrato: hashContrato,
+      });
+    }
 
     const created = await Poliza.bulkCreate(polizas);
     console.log(`✅ ${created.length} pólizas creadas`);
+
+    // Log statistics for verification
+    const vigentes = created.filter((p: any) => p.estadoPoliza === "VIGENTE");
+    const conHash = created.filter((p: any) => p.hashContrato);
+    console.log(`   📊 ${vigentes.length} VIGENTE, ${conHash.length} con blockchain hash`);
+
     return created;
   }
 
@@ -1169,72 +1423,118 @@ class SimpleDataSeeder {
     const polizas = await Poliza.findAll();
     console.log(`Found ${polizas.length} polizas for reference`);
 
-    const pagos = [
-      {
-        total: 15000.0,
-        fecha: new Date("2024-02-01"),
-        hora: "14:30:00",
-        poliza_numero: polizas[0].numero_poliza,
-        mp_payment_id: "MP001234567",
-        mp_status: "approved",
-        mp_status_detail: "accredited",
-        mp_external_reference: `poliza_${polizas[0].numero_poliza}_20240201`,
-        mp_payment_method_id: "visa",
-        mp_payment_type_id: "credit_card",
-        mp_preference_id: "PREF001234567",
-      },
-      {
-        total: 8333.33,
-        fecha: new Date("2024-02-05"),
-        hora: "10:15:00",
-        poliza_numero: polizas[1].numero_poliza,
-        mp_payment_id: "MP001234568",
-        mp_status: "approved",
-        mp_status_detail: "accredited",
-        mp_external_reference: `poliza_${polizas[1].numero_poliza}_20240205`,
-        mp_payment_method_id: "mastercard",
-        mp_payment_type_id: "credit_card",
-        mp_preference_id: "PREF001234568",
-      },
-      {
-        total: 3333.33,
-        fecha: new Date("2024-02-10"),
-        hora: "16:45:00",
-        poliza_numero: polizas[2].numero_poliza,
-        mp_payment_id: "MP001234569",
-        mp_status: "approved",
-        mp_status_detail: "accredited",
-        mp_external_reference: `poliza_${polizas[2].numero_poliza}_20240210`,
-        mp_payment_method_id: "visa",
-        mp_payment_type_id: "debit_card",
-        mp_preference_id: "PREF001234569",
-      },
-      {
-        total: 1500.0,
-        fecha: new Date("2024-02-15"),
-        hora: "12:20:00",
-        poliza_numero: polizas[3].numero_poliza,
-        mp_payment_id: "MP001234570",
-        mp_status: "approved",
-        mp_status_detail: "accredited",
-        mp_external_reference: `poliza_${polizas[3].numero_poliza}_20240215`,
-        mp_payment_method_id: "account_money",
-        mp_payment_type_id: "account_money",
-        mp_preference_id: "PREF001234570",
-      },
-      {
-        total: 22000.0,
-        fecha: new Date("2024-02-20"),
-        hora: "09:30:00",
-        poliza_numero: polizas[4].numero_poliza,
-        mp_status: "pending",
-        mp_external_reference: `poliza_${polizas[4].numero_poliza}_20240220`,
-        mp_preference_id: "PREF001234571",
-      },
-    ];
+    const pagos = [];
+    const paymentMethods = ["visa", "mastercard", "account_money", "debit_card"];
+    const paymentTypes = ["credit_card", "debit_card", "account_money"];
+
+    // Crear pagos para pólizas vigentes y algunas vencidas
+    for (let i = 0; i < polizas.length; i++) {
+      const poliza = polizas[i];
+
+      // Only create payments for VIGENTE and some VENCIDA policies
+      if (poliza.estadoPoliza === "VIGENTE" || (poliza.estadoPoliza === "VENCIDA" && i % 2 === 0)) {
+        const metodoPago = paymentMethods[i % paymentMethods.length];
+        const tipoPago = paymentTypes[i % paymentTypes.length];
+        const montoTotal = poliza.precioPolizaActual || 15000;
+
+        // Create payment on or shortly after contract date
+        const fechaPago = new Date(poliza.fechaContratacion!);
+        fechaPago.setDate(fechaPago.getDate() + Math.floor(Math.random() * 3));
+
+        pagos.push({
+          total: montoTotal,
+          fecha: fechaPago,
+          hora: `${Math.floor(Math.random() * 12) + 9}:${Math.floor(Math.random() * 60)}:${Math.floor(Math.random() * 60)}`,
+          poliza_numero: poliza.numero_poliza,
+          mp_payment_id: `MP${1000000 + i}`,
+          mp_status: "approved",
+          mp_status_detail: "accredited",
+          mp_external_reference: `poliza_${poliza.numero_poliza}_${fechaPago.getFullYear()}${String(fechaPago.getMonth() + 1).padStart(2, '0')}${String(fechaPago.getDate()).padStart(2, '0')}`,
+          mp_payment_method_id: metodoPago,
+          mp_payment_type_id: tipoPago,
+          mp_preference_id: `PREF${100000 + i}`,
+        });
+      }
+
+      // Create pending payment for some IMPAGA policies
+      if (poliza.estadoPoliza === "IMPAGA") {
+        const fechaPago = new Date(poliza.fechaContratacion!);
+
+        pagos.push({
+          total: poliza.precioPolizaActual || 15000,
+          fecha: fechaPago,
+          hora: `${Math.floor(Math.random() * 12) + 9}:${Math.floor(Math.random() * 60)}:00`,
+          poliza_numero: poliza.numero_poliza,
+          mp_status: "pending",
+          mp_external_reference: `poliza_${poliza.numero_poliza}_pending`,
+          mp_preference_id: `PREF${200000 + i}`,
+        });
+      }
+    }
 
     const created = await Pago.bulkCreate(pagos);
     console.log(`✅ ${created.length} pagos creados`);
+    return created;
+  }
+
+  private async seedSiniestros() {
+    console.log("🚨 Creando siniestros de prueba...");
+
+    // Obtener pólizas vigentes y vencidas
+    const polizas = await Poliza.findAll({
+      where: {
+        estadoPoliza: ["VIGENTE", "VENCIDA", "CANCELADA"],
+      },
+    });
+    const usuarios = await Usuario.findAll();
+
+    console.log(`Found ${polizas.length} polizas for siniestros`);
+
+    const siniestros = [];
+    const estadosSiniestro = ["APROBADA", "RECHAZADA", "PENDIENTE", "APROBADA", "APROBADA"];
+
+    // Helper to get date within policy period
+    const getSiniestroDate = (poliza: any, monthsAgo: number) => {
+      const fechaContratacion = new Date(poliza.fechaContratacion);
+      const fechaVencimiento = poliza.fechaVencimiento ? new Date(poliza.fechaVencimiento) : new Date();
+
+      // Get a date between contract and expiry, biased towards recent
+      const now = new Date();
+      const targetDate = new Date(now);
+      targetDate.setMonth(now.getMonth() - monthsAgo);
+
+      // Make sure it's within policy period
+      if (targetDate < fechaContratacion) {
+        targetDate.setTime(fechaContratacion.getTime() + Math.random() * (now.getTime() - fechaContratacion.getTime()));
+      }
+      if (targetDate > fechaVencimiento && poliza.estadoPoliza !== "VIGENTE") {
+        targetDate.setTime(fechaContratacion.getTime() + Math.random() * (fechaVencimiento.getTime() - fechaContratacion.getTime()));
+      }
+
+      return targetDate;
+    };
+
+    // Create siniestros for about 85% of policies, distributed across last 6 months  
+    const numSiniestros = Math.floor(polizas.length * 0.85);
+    for (let i = 0; i < numSiniestros; i++) {
+      const poliza = polizas[i % polizas.length];
+      const estado = estadosSiniestro[i % estadosSiniestro.length];
+      const monthsAgo = Math.floor(Math.random() * 6);
+      const fechaSiniestro = getSiniestroDate(poliza, monthsAgo);
+
+      siniestros.push({
+        fechaSiniestro: fechaSiniestro,
+        horaSiniestro: `${Math.floor(Math.random() * 24)}:${Math.floor(Math.random() * 60)}:00`,
+        usuario_legajo: i % 3 === 0 ? usuarios[i % usuarios.length].legajo : undefined,
+        poliza_numero: poliza.numero_poliza,
+        estado: estado as any,
+        fotoDenuncia: Buffer.from(`fake-foto-denuncia-${i}`),
+        fotoVehiculo: Buffer.from(`fake-foto-vehiculo-${i}`),
+      });
+    }
+
+    const created = await Siniestro.bulkCreate(siniestros);
+    console.log(`✅ ${created.length} siniestros creados (${Math.round((created.length / polizas.length) * 100)}% de pólizas)`);
     return created;
   }
 
@@ -1277,6 +1577,7 @@ class SimpleDataSeeder {
       const lineasCotizacion = await this.seedLineaCotizaciones();
       const polizas = await this.seedPolizas();
       const pagos = await this.seedPagos();
+      const siniestros = await this.seedSiniestros();
 
       console.log("========================================================");
       console.log("🎉 ¡Seeders completados exitosamente!");
@@ -1296,23 +1597,26 @@ class SimpleDataSeeder {
       console.log(`📋 Detalles: ${detalles.length}`);
       console.log(`🔗 Relaciones Cob-Det: ${coberturaDetalles.length}`);
       console.log(`📝 Tipos Contratación: ${tiposContratacion.length}`);
-      console.log(`� Config. Edad: ${configuracionesEdad.length}`);
-      console.log(`�💳 Períodos Pago: ${periodosPago.length}`);
+      console.log(`👶 Config. Edad: ${configuracionesEdad.length}`);
+      console.log(`💳 Períodos Pago: ${periodosPago.length}`);
       console.log(`📄 Documentación: ${documentacion.length}`);
       console.log(`💰 Cotizaciones: ${cotizaciones.length}`);
       console.log(`📋 Líneas Cotización: ${lineasCotizacion.length}`);
       console.log(`📜 Pólizas: ${polizas.length}`);
       console.log(`💵 Pagos: ${pagos.length}`);
+      console.log(`🚨 Siniestros: ${siniestros.length}`);
 
       console.log("\n🎯 DATOS LISTOS PARA PROBAR:");
       console.log("- Usuarios: LEG001, LEG002, LEG003");
       console.log("- Clientes con vehículos asignados");
       console.log("- Coberturas y detalles relacionados");
-      console.log("- 5 Pólizas vigentes con documentación");
-      console.log("- Cotizaciones y líneas de cotización");
+      console.log(`- ${polizas.length} Pólizas con diferentes estados (VIGENTE, VENCIDA, CANCELADA, IMPAGA)`);
+      console.log("- Cotizaciones distribuidas en los últimos 6 meses");
       console.log("- Configuraciones básicas del sistema");
+      console.log(`- ${pagos.length} Pagos distribuidos según pólizas`);
+      console.log(`- ${siniestros.length} Siniestros con estados APROBADA, RECHAZADA y PENDIENTE`);
       console.log(
-        "\n✅ LISTO: Ahora puedes crear pagos usando las pólizas generadas"
+        "\n✅ LISTO: Dashboard con datos realistas para los últimos 6 meses"
       );
     } catch (error) {
       console.error("❌ Error durante el seeding:", error);

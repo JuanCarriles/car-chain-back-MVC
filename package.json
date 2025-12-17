@@ -10,7 +10,7 @@
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "migrate": "npx sequelize-cli db:migrate",
     "migrate:undo": "npx sequelize-cli db:migrate:undo",
-    "seed": "npx ts-node scriptDB/runSeeder.ts",
+    "seed": "npx ts-node scritpDB/runSeeder.ts",
     "seed:undo": "npx sequelize-cli db:seed:undo:all"
   },
   "keywords": [

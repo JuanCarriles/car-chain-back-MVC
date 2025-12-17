@@ -260,7 +260,7 @@ export class UsuariosController {
     try {
       const { mail } = req.params;
       const persona = await Persona.findOne({
-        where: { correo: mail }, // 👈 acá debe ir el filtro del correo
+        where: { correo: mail },
         include: [
           {
             model: Localidad,
